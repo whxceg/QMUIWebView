@@ -1,0 +1,2 @@
+include ':Sample', ':library'
+rootProject.name='QMUI'
