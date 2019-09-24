@@ -17,7 +17,9 @@
 package com.sam.lib.qmui.webview;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Rect;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -28,7 +30,6 @@ import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 
 import com.sam.lib.qmui.IWindowInsetLayout;
 import com.sam.lib.qmui.util.QMUIDisplayHelper;
@@ -60,12 +61,12 @@ public class QMUIWebView extends WebView implements IWindowInsetLayout {
 
 
     public QMUIWebView(Context context) {
-        super(context);
+        super(getFixedContext(context));
         init();
     }
 
     public QMUIWebView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        super(getFixedContext(context), attrs);
         init();
     }
 
@@ -366,4 +367,10 @@ public class QMUIWebView extends WebView implements IWindowInsetLayout {
          */
         void onScrollChange(WebView webView, int scrollX, int scrollY, int oldScrollX, int oldScrollY);
     }
+
+    // Android Lollipop 5.0 & 5.1
+    private static Context getFixedContext(Context context) {
+        return Build.VERSION.SDK_INT >= 21 && Build.VERSION.SDK_INT < 23 ? context.createConfigurationContext(new Configuration()) : context;
+    }
+
 }
