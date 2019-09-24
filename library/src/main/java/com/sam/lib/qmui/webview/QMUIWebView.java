@@ -16,6 +16,7 @@
 
 package com.sam.lib.qmui.webview;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Rect;
@@ -71,8 +72,13 @@ public class QMUIWebView extends WebView implements IWindowInsetLayout {
     }
 
     public QMUIWebView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+        super(getFixedContext(context), attrs, defStyleAttr);
         init();
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public QMUIWebView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(getFixedContext(context), attrs, defStyleAttr, defStyleRes);
     }
 
     private void init() {
@@ -102,7 +108,7 @@ public class QMUIWebView extends WebView implements IWindowInsetLayout {
         mOnScrollChangeListeners.remove(listener);
     }
 
-    public void removeAllOnScrollChangeListener(){
+    public void removeAllOnScrollChangeListener() {
         mOnScrollChangeListeners.clear();
     }
 
