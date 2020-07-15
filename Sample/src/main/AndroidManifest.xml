@@ -20,9 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WebViewRecyclerViewActivity" />
-        <activity android:name=".WebViewRecyclerViewActivity2" />
-        <activity android:name=".WebViewRecyclerViewActivity3" />
+        <activity android:name=".AppbarLayoutWebViewRecyclerViewActivity" />
+        <activity android:name=".QMUIWebViewRecyclerViewActivity" />
+        <activity android:name=".QMUIWebViewHeaderFooterViewRecyclerViewActivity" />
     </application>
 
 </manifest>

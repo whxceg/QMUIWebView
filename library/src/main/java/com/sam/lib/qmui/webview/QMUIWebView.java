@@ -79,6 +79,7 @@ public class QMUIWebView extends WebView implements IWindowInsetLayout {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public QMUIWebView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(getFixedContext(context), attrs, defStyleAttr, defStyleRes);
+        init();
     }
 
     private void init() {
@@ -227,7 +228,7 @@ public class QMUIWebView extends WebView implements IWindowInsetLayout {
     }
 
     private void setStyleDisplayCutoutSafeArea(@NonNull Rect rect) {
-        if (sIsReflectionOccurError) {
+        if (sIsReflectionOccurError || Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
             return;
         }
 

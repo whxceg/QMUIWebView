@@ -30,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 
+import static android.view.View.MEASURED_SIZE_MASK;
 import static com.sam.lib.qmui.QMUIInterpolatorStaticHolder.QUNITIC_INTERPOLATOR;
 
 
@@ -274,7 +275,7 @@ public class QMUIContinuousNestedTopAreaBehavior extends QMUIViewOffsetBehavior<
 
         } else {
             parent.onMeasureChild(child, parentWidthMeasureSpec, widthUsed,
-                    View.MeasureSpec.makeMeasureSpec(availableHeight, View.MeasureSpec.UNSPECIFIED), heightUsed);
+                    View.MeasureSpec.makeMeasureSpec(MEASURED_SIZE_MASK, View.MeasureSpec.AT_MOST), heightUsed);
         }
         return true;
     }
@@ -429,8 +430,21 @@ public class QMUIContinuousNestedTopAreaBehavior extends QMUIViewOffsetBehavior<
                 int unconsumedY = y - mLastFlingY;
                 mLastFlingY = y;
                 if (mCurrentParent != null && mCurrentChild != null) {
-                    scroll(mCurrentParent, mCurrentChild, unconsumedY);
-                    postOnAnimation();
+                    boolean canScroll = true;
+                    if(mCurrentParent instanceof QMUIContinuousNestedScrollLayout){
+                        QMUIContinuousNestedScrollLayout layout = (QMUIContinuousNestedScrollLayout) mCurrentParent;
+                        if(unconsumedY > 0 && layout.getCurrentScroll() >= layout.getScrollRange()){
+                            canScroll = false;
+                        }else if(unconsumedY < 0 && layout.getCurrentScroll() <= 0){
+                            canScroll = false;
+                        }
+                    }
+                    if(canScroll){
+                        scroll(mCurrentParent, mCurrentChild, unconsumedY);
+                        postOnAnimation();
+                    }else{
+                        mOverScroller.abortAnimation();
+                    }
                 }
             }
 
@@ -438,6 +452,7 @@ public class QMUIContinuousNestedTopAreaBehavior extends QMUIViewOffsetBehavior<
             if (mReSchedulePostAnimationCallback) {
                 internalPostOnAnimation();
             } else {
+                mCurrentParent = null;
                 mCurrentChild = null;
                 onFlingOrScrollEnd();
             }
