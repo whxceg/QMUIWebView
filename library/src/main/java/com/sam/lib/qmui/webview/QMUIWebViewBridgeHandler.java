@@ -1,6 +1,5 @@
 package com.sam.lib.qmui.webview;
 
-import android.util.Log;
 import android.util.Pair;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
@@ -52,7 +51,6 @@ public abstract class QMUIWebViewBridgeHandler {
         mWebView.evaluateJavascript(MESSAGE_JS_FETCH_SCRIPT, new ValueCallback<String>() {
             @Override
             public void onReceiveValue(String value) {
-                Log.e("sam", "onReceiveValue: " + value);
                 String unescaped = unescape(value);
                 if (unescaped != null) {
                     try {
