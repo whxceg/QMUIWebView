@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
         addView(AppbarLayoutWebViewRecyclerViewActivity::class.java)
         addView(QMUIWebViewRecyclerViewActivity::class.java)
         addView(QMUIWebViewHeaderFooterViewRecyclerViewActivity::class.java)
+        addView(QMUIHeaderWebViewFooterViewViewPagerActivity::class.java)
+        addView(ViewPagerActivity::class.java)
     }
 
     private fun addView(clazz: Class<out Activity>) {
